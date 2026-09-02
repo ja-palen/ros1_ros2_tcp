@@ -1,0 +1,42 @@
+transport:
+  host: 127.0.0.1
+  port: 5000
+  reconnect_seconds: 1.0
+
+mappings:
+  - name: cmd_vel
+    direction: ros2_to_ros1
+    ros2:
+      topic: /cmd_vel
+      type: geometry_msgs/msg/Twist
+    ros1:
+      topic: /cmd_vel
+      type: geometry_msgs/Twist
+    fields:
+      - {from: linear.x, to: linear.x}
+      - {from: linear.y, to: linear.y}
+      - {from: linear.z, to: linear.z}
+      - {from: angular.x, to: angular.x}
+      - {from: angular.y, to: angular.y}
+      - {from: angular.z, to: angular.z}
+
+  # Example ROS1 -> ROS2:
+  - name: odom
+    direction: ros1_to_ros2
+    ros1:
+      topic: /odom
+      type: nav_msgs/Odometry
+    ros2:
+      topic: /odom
+      type: nav_msgs/msg/Odometry
+    fields:
+      - {from: header.frame_id, to: header.frame_id}
+      - {from: child_frame_id, to: child_frame_id}
+      - {from: pose.pose.position.x, to: pose.pose.position.x}
+      - {from: pose.pose.position.y, to: pose.pose.position.y}
+      - {from: pose.pose.position.z, to: pose.pose.position.z}
+      - {from: pose.pose.orientation.x, to: pose.pose.orientation.x}
+      - {from: pose.pose.orientation.y, to: pose.pose.orientation.y}
+      - {from: pose.pose.orientation.z, to: pose.pose.orientation.z}
+      - {from: pose.pose.orientation.w, to: pose.pose.orientation.w}
+      - {from: pose.covariance, to: pose.covariance}

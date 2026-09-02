@@ -1,0 +1,13 @@
+services:
+  ros2_gateway:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: ros2_topic_gateway
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      ROS_DOMAIN_ID: "0"
+      GATEWAY_DEBUG: "1"
+    volumes:
+      - ../config/mappings.yaml:/gateway/config/mappings.yaml:ro
