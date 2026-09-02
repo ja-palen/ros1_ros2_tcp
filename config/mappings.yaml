@@ -42,7 +42,7 @@ mappings:
       - {from: pose.covariance, to: pose.covariance}
 
   - name: tf
-    direction: ros2_to_ros1
+    direction: ros1_to_ros2
     ros2:
       topic: /tf
       type: tf2_msgs/msg/TFMessage
@@ -56,8 +56,8 @@ mappings:
           ros1_type: geometry_msgs/TransformStamped
           ros2_type: geometry_msgs/msg/TransformStamped
           fields:
-            - {from: header.stamp.sec,     to: header.stamp.secs}
-            - {from: header.stamp.nanosec, to: header.stamp.nsecs}
+            - {ros1: header.stamp.secs,  ros2: header.stamp.sec}
+            - {ros1: header.stamp.nsecs, ros2: header.stamp.nanosec}
             - {from: header.frame_id,      to: header.frame_id}
             - {from: child_frame_id,       to: child_frame_id}
             - {from: transform.translation.x, to: transform.translation.x}
