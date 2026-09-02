@@ -13,7 +13,7 @@ class Gateway(Node):
         t = cfg.get("transport", {})
         self.tcp = TCPServer(t.get("host","127.0.0.1"), t.get("port",5000), self.debug)
         self.tcp.start()
-        self.tr = {m["name"]: Translator(m,self.debug) for m in cfg["mappings"]}
+        self.tr = {m["name"]: Translator(m,self.debug,side="ros2") for m in cfg["mappings"]}
         self.pub = {}
         for m in cfg["mappings"]:
             if m["direction"] == "ros2_to_ros1":
