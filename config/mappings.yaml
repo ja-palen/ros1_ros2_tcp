@@ -68,6 +68,7 @@ mappings:
             - {from: transform.rotation.z, to: transform.rotation.z}
             - {from: transform.rotation.w, to: transform.rotation.w}
 
+          ros1_type: geometry_msgs/TransformStamped
   - name: scan
     direction: ros1_to_ros2
     ros1:
