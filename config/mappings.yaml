@@ -24,7 +24,7 @@ mappings:
   - name: odom
     direction: ros1_to_ros2
     ros1:
-      topic: /odom
+      topic: /robot/robotnik_base_control/odom
       type: nav_msgs/Odometry
     ros2:
       topic: /odom
@@ -67,3 +67,25 @@ mappings:
             - {from: transform.rotation.y, to: transform.rotation.y}
             - {from: transform.rotation.z, to: transform.rotation.z}
             - {from: transform.rotation.w, to: transform.rotation.w}
+
+  - name: scan
+    direction: ros1_to_ros2
+    ros1:
+      topic: /scan
+      type: sensor_msgs/LaserScan
+    ros2:
+      topic: /scan
+      type: sensor_msgs/msg/LaserScan
+    fields:
+      - {ros1: header.stamp.secs,  ros2: header.stamp.sec}
+      - {ros1: header.stamp.nsecs, ros2: header.stamp.nanosec}
+      - {from: header.frame_id,   to: header.frame_id}
+      - {from: angle_min,         to: angle_min}
+      - {from: angle_max,         to: angle_max}
+      - {from: angle_increment,   to: angle_increment}
+      - {from: time_increment,    to: time_increment}
+      - {from: scan_time,         to: scan_time}
+      - {from: range_min,         to: range_min}
+      - {from: range_max,         to: range_max}
+      - {from: ranges,            to: ranges}
+      - {from: intensities,       to: intensities}
