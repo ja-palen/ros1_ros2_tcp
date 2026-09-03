@@ -70,3 +70,7 @@ docker exec -it ros2_topic_gateway /bin/bash
 source /opt/ros/jazzy/setup.bash
 ros2 topic echo /odom
 ```
+
+# TO-DO
+- Better enconding (Protobuf) for heavy-loaded topics.
+- Make tf_static robust to listener launched after talker.
