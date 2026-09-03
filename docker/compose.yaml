@@ -11,6 +11,7 @@ services:
       GATEWAY_DEBUG: "1"
       DISPLAY: "${DISPLAY}"
       QT_X11_NO_MITSHM: "1"
+      LIBGL_ALWAYS_SOFTWARE: "1"
     volumes:
       - ../config/mappings.yaml:/gateway/config/mappings.yaml:ro
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
