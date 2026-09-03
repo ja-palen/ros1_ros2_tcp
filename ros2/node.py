@@ -11,7 +11,7 @@ def _qos(m):
     if m.get("qos") == "static":
         return QoSProfile(
             depth=1,
-            history=HistoryPolicy.KEEP_LAST,
+            history=HistoryPolicy.KEEP_ALL,
             reliability=ReliabilityPolicy.RELIABLE,
             durability=DurabilityPolicy.TRANSIENT_LOCAL,
         )
