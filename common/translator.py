@@ -1,4 +1,4 @@
-import importlib, yaml
+import base64, importlib, yaml
 
 def load_type(type_name):
     p = type_name.split("/")
@@ -15,14 +15,25 @@ def get_field(obj, path):
         obj = getattr(obj, part)
     return obj
 
+def _decode_value(v):
+    # unwrap {"__b64": "..."} produced by json_value for uint8[] fields
+    if isinstance(v, dict) and len(v) == 1 and "__b64" in v:
+        return base64.b64decode(v["__b64"])
+    return v
+
 def set_field(obj, path, value):
     parts = path.split(".")
     for part in parts[:-1]:
         obj = getattr(obj, part)
-    setattr(obj, parts[-1], value)
+    setattr(obj, parts[-1], _decode_value(value))
 
 def json_value(v):
     if v is None or isinstance(v, (str, int, float, bool)): return v
+    if isinstance(v, (bytes, bytearray, memoryview)):
+        return {"__b64": base64.b64encode(bytes(v)).decode("ascii")}
+    # rclpy delivers uint8[] as array.array('B', ...)
+    if getattr(v, "typecode", None) == "B" and hasattr(v, "tobytes"):
+        return {"__b64": base64.b64encode(v.tobytes()).decode("ascii")}
     if isinstance(v, (list, tuple)): return [json_value(x) for x in v]
     try: return float(v)
     except (TypeError, ValueError): return str(v)
