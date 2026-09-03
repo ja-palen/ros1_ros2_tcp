@@ -28,6 +28,7 @@ ROS1 connects to it.
 
 Test ROS2 -> ROS1:
 ```bash
+xhost +local:docker  
 docker exec -it ros2_topic_gateway /bin/bash
 source /opt/ros/jazzy/setup.bash
 ros2 topic pub /cmd_vel geometry_msgs/msg/Twist   "{linear: {x: 1.0}, angular: {z: 0.5}}"
