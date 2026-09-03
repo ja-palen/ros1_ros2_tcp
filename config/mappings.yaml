@@ -70,6 +70,7 @@ mappings:
 
   - name: tf_static
     direction: ros1_to_ros2
+    qos: static
     ros2:
       topic: /tf_static
       type: tf2_msgs/msg/TFMessage
@@ -116,3 +117,33 @@ mappings:
       - {from: range_max,         to: range_max}
       - {from: ranges,            to: ranges}
       - {from: intensities,       to: intensities}
+
+  # - name: points
+  #   direction: ros1_to_ros2
+  #   ros1:
+  #     topic: /robot/laser_front/points
+  #     type: sensor_msgs/PointCloud2
+  #   ros2:
+  #     topic: /points
+  #     type: sensor_msgs/msg/PointCloud2
+  #   fields:
+  #     - {ros1: header.stamp.secs,  ros2: header.stamp.sec}
+  #     - {ros1: header.stamp.nsecs, ros2: header.stamp.nanosec}
+  #     - {from: header.frame_id, to: header.frame_id}
+  #     - {from: height,          to: height}
+  #     - {from: width,           to: width}
+  #     - {from: is_bigendian,    to: is_bigendian}
+  #     - {from: point_step,      to: point_step}
+  #     - {from: row_step,        to: row_step}
+  #     - {from: is_dense,        to: is_dense}
+  #     - {from: data,            to: data}
+  #     - from: fields
+  #       to: fields
+  #       list_of:
+  #         ros1_type: sensor_msgs/PointField
+  #         ros2_type: sensor_msgs/msg/PointField
+  #         fields:
+  #           - {from: name,     to: name}
+  #           - {from: offset,   to: offset}
+  #           - {from: datatype, to: datatype}
+  #           - {from: count,    to: count}

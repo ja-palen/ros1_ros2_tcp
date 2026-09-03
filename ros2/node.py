@@ -3,8 +3,19 @@ import os, sys, threading, time
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, DurabilityPolicy, HistoryPolicy, ReliabilityPolicy
 from common.translator import load_config, load_type, Translator
 from common.tcp import TCPServer
+
+def _qos(m):
+    if m.get("qos") == "static":
+        return QoSProfile(
+            depth=1,
+            history=HistoryPolicy.KEEP_LAST,
+            reliability=ReliabilityPolicy.RELIABLE,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        )
+    return 10
 
 class Gateway(Node):
     def __init__(self, cfg):
@@ -18,10 +29,10 @@ class Gateway(Node):
         for m in cfg["mappings"]:
             if m["direction"] == "ros2_to_ros1":
                 typ = load_type(m["ros2"]["type"])
-                self.create_subscription(typ, m["ros2"]["topic"], self.cb(m), 10)
+                self.create_subscription(typ, m["ros2"]["topic"], self.cb(m), _qos(m))
             else:
                 typ = load_type(m["ros2"]["type"])
-                self.pub[m["name"]] = self.create_publisher(typ, m["ros2"]["topic"], 10)
+                self.pub[m["name"]] = self.create_publisher(typ, m["ros2"]["topic"], _qos(m))
         threading.Thread(target=self.accept_loop, daemon=True).start()
         threading.Thread(target=self.receive_loop, daemon=True).start()
 
