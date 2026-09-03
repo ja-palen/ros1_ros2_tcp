@@ -13,6 +13,8 @@ services:
       QT_X11_NO_MITSHM: "1"
       LIBGL_ALWAYS_SOFTWARE: "1"
     volumes:
-      - ../config/mappings.yaml:/gateway/config/mappings.yaml:ro
+      - ../common:/gateway/common
+      - ../ros2:/gateway/ros2
+      - ../config:/gateway/config
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority:ro

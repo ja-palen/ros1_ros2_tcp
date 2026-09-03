@@ -71,7 +71,7 @@ mappings:
   - name: scan
     direction: ros1_to_ros2
     ros1:
-      topic: /scan
+      topic: /robot/laser_front/scan
       type: sensor_msgs/LaserScan
     ros2:
       topic: /scan
