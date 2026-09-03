@@ -37,7 +37,7 @@ class TCPConnection:
             except OSError: pass
 
     def send(self, packet):
-        payload = json.dumps(packet, separators=(",", ":"), allow_nan=False).encode()
+        payload = json.dumps(packet, separators=(",", ":"), allow_nan=True).encode()
         with self.send_lock:
             s = self.sock
             if not s: return False
@@ -111,7 +111,7 @@ class TCPServer:
                 if self.server is None: return False
 
     def send(self, packet):
-        payload = json.dumps(packet, separators=(",", ":"), allow_nan=False).encode()
+        payload = json.dumps(packet, separators=(",", ":"), allow_nan=True).encode()
         with self.send_lock:
             c = self.client
             if not c: return False
