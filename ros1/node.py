@@ -20,7 +20,8 @@ class Gateway:
                 rospy.Subscriber(m["ros1"]["topic"],typ,self.cb(m),queue_size=10)
             else:
                 typ=load_type(m["ros1"]["type"])
-                self.pub[m["name"]]=rospy.Publisher(m["ros1"]["topic"],typ,queue_size=10)
+                latch=m.get("qos")=="static"
+                self.pub[m["name"]]=rospy.Publisher(m["ros1"]["topic"],typ,queue_size=10,latch=latch)
         threading.Thread(target=self.receive_loop,daemon=True).start()
 
     def cb(self,m):
